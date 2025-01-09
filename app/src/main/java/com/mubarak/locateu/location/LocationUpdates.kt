@@ -2,21 +2,15 @@ package com.mubarak.locateu.location
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.location.Location
 import android.os.Looper
 import androidx.annotation.RequiresPermission
-import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -84,9 +78,9 @@ fun LocationUpdatesContent(usePreciseLocation: Boolean,modifier: Modifier = Modi
 
     // Only register the location updates effect when we have a request
     if (locationRequest != null) {
-        LocationUpdatesEffect(locationRequest!!) { result ->
+        LocationUpdatesEffect(locationRequest!!) { locationResult ->
             // For each result update the text
-            for (currentLocation in result.locations) {
+            for (currentLocation in locationResult.locations) {
                 locationUpdates =
                         "- @latitude: ${currentLocation.latitude}\n" +
                         "- @longitude: ${currentLocation.longitude}\n" +
@@ -165,10 +159,10 @@ fun LocationUpdatesEffect(
         }
         val observer = LifecycleEventObserver { _, event -> // only request location updates when app is in foreground
             if (event == Lifecycle.Event.ON_START) {
-                locationClient.requestLocationUpdates(
+                locationClient.requestLocationUpdates( // start receiving update
                     locationRequest, locationCallback, Looper.getMainLooper(),
                 )
-            } else if (event == Lifecycle.Event.ON_STOP) {
+            } else if (event == Lifecycle.Event.ON_STOP) { // stop when activity is not in foreground
                 locationClient.removeLocationUpdates(locationCallback)
             }
         }

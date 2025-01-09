@@ -61,10 +61,14 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Fused Location Provider by (Google Play services)
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation(libs.play.services.location)
 
     // Accompanist Permission Handler
-    implementation("com.google.accompanist:accompanist-permissions:0.35.1-alpha")
+    implementation(libs.accompanist.permissions)
+
+    // AAC
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
