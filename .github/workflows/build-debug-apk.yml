@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew :app:assembleDebug
 
       - name: Upload debug APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: locateu-debug-apk
           path: app/build/outputs/apk/debug/*.apk
